@@ -1,0 +1,32 @@
+@use '@styles/variable.module.scss' as variable;
+@use '@styles/mixin.module.scss' as mixin;
+
+.container {
+  background-color: variable.$primary_color;
+  margin-top: -75px;
+  padding: 20px 50px;
+  @include mixin.flex_box_custom(space-between, center, 0px);
+}
+
+.containerCard {
+  width: 280px;
+
+  height: 104px;
+  @include mixin.flex_box_custom(center, center, 18px);
+}
+
+.containerContent {
+  @include mixin.flex_box_custom(center, flex-start, 13px);
+  flex-direction: column;
+  color: variable.$white_color;
+  font-weight: 300;
+
+  .title {
+    font-size: 17px;
+  }
+
+  .des {
+    font-size: 16px;
+    color: #ffffffc7;
+  }
+}
