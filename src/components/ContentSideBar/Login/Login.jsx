@@ -3,10 +3,10 @@ import InputCommon from '@components/InputCommon/InputCommon';
 import * as Yup from 'yup';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
-import { useState } from 'react';
-import { useContext } from 'react';
-import { register } from '@/apis/authService';
+import { useState, useEffect, useContext } from 'react';
 import styles from './styles.module.scss';
+import { register, signIn, getInfo } from '@/apis/authService';
+import Cookies from 'js-cookie';
 
 function Login() {
   const { container, title, boxRememberMe, lostPw } = styles;
@@ -32,10 +32,9 @@ function Login() {
     onSubmit: async (values) => {
       if (isLoading) return;
 
+      const { email: username, password } = values;
+      setIsLoading(true);
       if (isRegister) {
-        const { email: username, password } = values;
-
-        setIsLoading(true);
         await register({ username, password })
           .then((res) => {
             toast.success(res.data.message);
@@ -46,6 +45,23 @@ function Login() {
             setIsLoading(false);
           });
       }
+
+      if (!isRegister) {
+        await signIn({ username, password })
+          .then((res) => {
+            setIsLoading(false);
+            const { id, token, refreshToken } = res.data;
+
+            Cookies.set('token', token);
+            Cookies.set('refreshToken', refreshToken);
+
+            toast.success('Sign in successfully!');
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            toast.error('Sign in failed!');
+          });
+      }
     }
   });
 
@@ -53,6 +69,10 @@ function Login() {
     setIsRegister(!isRegister);
     formik.resetForm();
   };
+
+  useEffect(() => {
+    getInfo();
+  }, []);
 
   return (
     <div className={container}>
