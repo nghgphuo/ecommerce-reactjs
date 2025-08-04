@@ -1,16 +1,18 @@
+import { ToastContext } from '@/contexts/ToastProvider';
 import InputCommon from '@components/InputCommon/InputCommon';
-import styles from './styles.module.scss';
+import * as Yup from 'yup';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { ToastContext } from '@/contexts/ToastProvider';
+import { register } from '@/apis/authService';
+import styles from './styles.module.scss';
 
 function Login() {
   const { container, title, boxRememberMe, lostPw } = styles;
 
   const [isRegister, setIsRegister] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
   const formik = useFormik({
     initialValues: {
@@ -27,8 +29,23 @@ function Login() {
         'Password must match'
       )
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      if (isLoading) return;
+
+      if (isRegister) {
+        const { email: username, password } = values;
+
+        setIsLoading(true);
+        await register({ username, password })
+          .then((res) => {
+            toast.success(res.data.message);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+            setIsLoading(false);
+          });
+      }
     }
   });
 
@@ -75,9 +92,8 @@ function Login() {
         )}
 
         <Button
-          content={isRegister ? 'REGISTER' : 'LOGIN'}
+          content={isLoading ? 'IS LOADING' : isRegister ? 'REGISTER' : 'LOGIN'}
           type='submit'
-          onClick={() => toast.warning('warning')}
         />
       </form>
 
@@ -85,7 +101,7 @@ function Login() {
         content={
           isRegister ? 'Already have an account?' : 'Don’t have an account?'
         }
-        isPriamry={false}
+        isPrimary={false}
         style={{ marginTop: '10px' }}
         onClick={handleToggle}
       />
