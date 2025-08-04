@@ -1,0 +1,28 @@
+@use '@styles/mixin.module.scss' as mixin;
+@use '@styles/variable.module.scss' as variable;
+
+.container {
+  @include mixin.flex_box_custom(space-between, unset, 0px);
+
+  padding: 20px 20px 0 30px;
+  height: 97%;
+  flex-direction: column;
+
+  .total {
+    @include mixin.flex_box_custom(space-between, center, 0px);
+
+    font-size: 14px;
+    color: variable.$four_color;
+    font-weight: 300;
+
+    .price {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .boxBtn {
+    @include mixin.flex_box_custom(center, center, 10px);
+    flex-direction: column;
+  }
+}

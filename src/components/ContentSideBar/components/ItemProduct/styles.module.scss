@@ -13,31 +13,41 @@
   img {
     width: 70px;
   }
+
   .boxClose {
     position: absolute;
-    cursor: pointer;
     top: 5px;
     right: 5px;
+    cursor: pointer;
     transform: translateX(30px);
     transition: all 0.3s ease;
   }
-  .boxContent {
-    @include mixin.flex_box_custom(center, flex-start, 15px);
 
+  .boxContent {
+    @include mixin.flex_box_custom(center, flex-start, 0px);
     flex-direction: column;
 
     .title {
       font-size: 16px;
       color: variable.$primary_color;
     }
+
+    .size {
+      color: #9e9e9e;
+      margin-top: 7px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
     .price {
       font-size: 14px;
       color: variable.$four_color;
+      margin-bottom: 7px;
     }
   }
 
   &:hover {
-    color: #f7f7f7;
+    background-color: #f7f7f7;
     .boxClose {
       transform: translateX(0);
     }
