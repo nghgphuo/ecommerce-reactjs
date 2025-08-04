@@ -26,7 +26,7 @@ function SaleHomepage() {
         </p>
 
         <div className={boxBtn}>
-          <Button content={'Read more'} isPriamry={false} />
+          <Button content={'Read more'} isPrimary={false} />
         </div>
       </div>
       <div

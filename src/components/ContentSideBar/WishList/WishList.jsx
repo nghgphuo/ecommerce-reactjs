@@ -10,7 +10,7 @@ function WishList() {
     <div className={container}>
       <div>
         <HeaderSideBar
-          icon={CiHeart}
+          icon={<CiHeart />}
           styles={{ fontSize: '30px' }}
           title={'WISHLIST'}
         />
