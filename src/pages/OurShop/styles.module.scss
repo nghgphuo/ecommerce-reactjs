@@ -1,0 +1,56 @@
+@use '@styles/variable.module.scss' as variable;
+@use '@styles/mixin.module.scss' as mixin;
+
+.container {
+  padding-top: 83px;
+}
+.functionBox {
+  @include mixin.flex_box_custom(space-between, center, 0px);
+
+  font-size: 14px;
+  font-weight: 300;
+  color: variable.$secondary_color;
+
+  .specialText {
+    font-weight: 400;
+    color: variable.$primary_color;
+  }
+  .btnBack {
+    cursor: pointer;
+  }
+}
+
+.containerBanner {
+  background-image: url('https://xstore.8theme.com/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Background.jpeg');
+  height: 279px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 10px;
+
+  .contentBox {
+    @include mixin.flex_box_custom(space-between, center, 30px);
+    flex-direction: column;
+    padding: 60px 0;
+
+    .countDownBox {
+      @include mixin.flex_box_custom(center, center, 10px);
+    }
+
+    .countDownBox > span {
+      margin-top: 0px;
+      border: 1px solid #e1e1e1;
+    }
+
+    .title {
+      font-size: 28px;
+      color: variable.$four_color;
+      font-weight: 400;
+    }
+
+    .boxBtn {
+      width: 160px;
+    }
+  }
+}
