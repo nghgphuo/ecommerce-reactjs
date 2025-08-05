@@ -9,7 +9,6 @@ function InputCommon({ label, type, isRequired = false, ...props }) {
     styles;
 
   const { formik, id } = props;
-  console.log('formik: ', props);
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = type === 'password';
