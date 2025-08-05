@@ -83,7 +83,7 @@
 }
 
 .containerProduct {
-  @include mixin.flex_box_custom(space-between, center, 10px);
+  @include mixin.flex_box_custom(space-between, flex-start, 10px);
 
   margin-top: 10px;
   flex-wrap: wrap;
