@@ -1,19 +1,11 @@
 import styles from './styles.module.scss';
 import reLoadIcon from '@icons/svgs/reloadIcon.svg';
-import heartIcon from '@icons/svgs/heartIcon.svg';
-import eyeIcon from '@icons/svgs/eyeIcon.svg';
+import heartIcon from '@icons/svgs/heart.svg';
 import cartIcon from '@icons/svgs/cartIcon.svg';
 import cls from 'classnames';
 import Button from '@components/Button/Button';
 
-function ProductItem({
-  src,
-  prevSrc,
-  name,
-  price,
-  details,
-  isNotHomePage = false
-}) {
+function ProductItemLine({ details }) {
   const {
     boxImg,
     showImgWhenHover,
@@ -23,16 +15,18 @@ function ProductItem({
     priceCl,
     boxSize,
     size,
-    textCenter,
-    boxBtn
+    boxBtn,
+    containerProductLine,
+    content
   } = styles;
 
-  const { size: sizes } = details;
+  const { size: sizes, images, name, price } = details;
+
   return (
-    <div>
+    <div className={containerProductLine}>
       <div className={boxImg}>
-        <img src={src} alt='' />
-        <img src={prevSrc} alt='' className={showImgWhenHover} />
+        <img src={images[0]} alt='' />
+        <img src={images[1]} alt='' className={showImgWhenHover} />
 
         <div className={showFncWhenHover}>
           <div className={boxIcon}>
@@ -45,11 +39,12 @@ function ProductItem({
             <img src={reLoadIcon} alt='' />
           </div>
           <div className={boxIcon}>
-            <img src={eyeIcon} alt='' />
+            <img src={cartIcon} alt='' />
           </div>
         </div>
       </div>
-      {isNotHomePage && (
+
+      <div className={content}>
         <div className={boxSize}>
           {sizes.map((item, index) => {
             return (
@@ -59,22 +54,16 @@ function ProductItem({
             );
           })}
         </div>
-      )}
-      <div className={cls(title, { [textCenter]: isNotHomePage })}>{name}</div>
-      <div className={cls(priceCl, { [textCenter]: isNotHomePage })}>
-        Brand 01
-      </div>
-      <div className={cls(priceCl, { [textCenter]: isNotHomePage })}>
-        ${price}
-      </div>
 
-      {isNotHomePage && (
+        <div className={cls(title)}>{name}</div>
+        <div>Brand 01</div>
+        <div className={cls(priceCl)}>${price}</div>
         <div className={boxBtn}>
           <Button content={'ADD TO CART'} />
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-export default ProductItem;
+export default ProductItemLine;
