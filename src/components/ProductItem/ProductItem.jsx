@@ -5,6 +5,8 @@ import eyeIcon from '@icons/svgs/eyeIcon.svg';
 import cartIcon from '@icons/svgs/cartIcon.svg';
 import cls from 'classnames';
 import Button from '@components/Button/Button';
+import { useContext, useState, useEffect } from 'react';
+import { OurShopContext } from '@contexts/OurShopProvider';
 
 function ProductItem({
   src,
@@ -14,6 +16,10 @@ function ProductItem({
   details,
   isNotHomePage = false
 }) {
+  const [sizeChoose, setSizeChoose] = useState('');
+  const ourShopStore = useContext(OurShopContext);
+  const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
+
   const {
     boxImg,
     showImgWhenHover,
@@ -24,10 +30,29 @@ function ProductItem({
     boxSize,
     size,
     textCenter,
-    boxBtn
+    boxBtn,
+    isActiveSize,
+    btnClear
   } = styles;
 
   const { size: sizes } = details;
+
+  const handleChooseSize = () => {
+    setSizeChoose(size);
+  };
+
+  const handleClearSize = () => {
+    setSizeChoose('');
+  };
+
+  useEffect(() => {
+    if (!isNotHomePage) {
+      setIsShowGrid(true);
+    } else {
+      setIsShowGrid(ourShopStore?.isShowGrid);
+    }
+  }, [isNotHomePage, ourShopStore?.isShowGrid]);
+
   return (
     <div>
       <div className={boxImg}>
@@ -53,11 +78,23 @@ function ProductItem({
         <div className={boxSize}>
           {sizes.map((item, index) => {
             return (
-              <div className={size} key={index}>
+              <div
+                key={index}
+                className={cls(size, {
+                  [isActiveSize]: sizeChoose === item.name
+                })}
+                onClick={() => handleChooseSize(item.name)}
+              >
                 {item.name}
               </div>
             );
           })}
+        </div>
+      )}
+
+      {sizeChoose && (
+        <div className={btnClear} onClick={handleClearSize()}>
+          clear
         </div>
       )}
       <div className={cls(title, { [textCenter]: isNotHomePage })}>{name}</div>
