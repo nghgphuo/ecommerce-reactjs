@@ -14,7 +14,7 @@ function ProductItem({
   name,
   price,
   details,
-  isNotHomePage = false
+  isHomePage = true
 }) {
   const [sizeChoose, setSizeChoose] = useState('');
   const ourShopStore = useContext(OurShopContext);
@@ -31,13 +31,17 @@ function ProductItem({
     size,
     textCenter,
     boxBtn,
+    content,
+    containerItem,
+    leftBtn,
+    largImg,
     isActiveSize,
     btnClear
   } = styles;
 
   const { size: sizes } = details;
 
-  const handleChooseSize = () => {
+  const handleChooseSize = (size) => {
     setSizeChoose(size);
   };
 
@@ -46,16 +50,16 @@ function ProductItem({
   };
 
   useEffect(() => {
-    if (!isNotHomePage) {
+    if (isHomePage) {
       setIsShowGrid(true);
     } else {
       setIsShowGrid(ourShopStore?.isShowGrid);
     }
-  }, [isNotHomePage, ourShopStore?.isShowGrid]);
+  }, [isHomePage, ourShopStore?.isShowGrid]);
 
   return (
-    <div>
-      <div className={boxImg}>
+    <div className={isShowGrid ? '' : containerItem}>
+      <div className={cls(boxImg, { [largImg]: !isShowGrid })}>
         <img src={src} alt='' />
         <img src={prevSrc} alt='' className={showImgWhenHover} />
 
@@ -74,42 +78,58 @@ function ProductItem({
           </div>
         </div>
       </div>
-      {isNotHomePage && (
-        <div className={boxSize}>
-          {sizes.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className={cls(size, {
-                  [isActiveSize]: sizeChoose === item.name
-                })}
-                onClick={() => handleChooseSize(item.name)}
-              >
-                {item.name}
-              </div>
-            );
-          })}
+      <div className={isShowGrid ? '' : content}>
+        {!isHomePage && (
+          <div className={boxSize}>
+            {sizes.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={cls(size, {
+                    [isActiveSize]: sizeChoose === item.name
+                  })}
+                  onClick={() =>
+                    sizeChoose === item.name
+                      ? handleClearSize()
+                      : handleChooseSize(item.name)
+                  }
+                >
+                  {item.name}
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {/* {sizeChoose && (
+          <div className={btnClear} onClick={() => handleClearSize()}>
+            clear
+          </div>
+        )} */}
+        <div className={cls(title, { [textCenter]: !isHomePage })}>{name}</div>
+        <div
+          className={cls(priceCl, { [textCenter]: !isHomePage })}
+          style={{
+            color: '#888'
+          }}
+        >
+          Brand 01
         </div>
-      )}
+        {/* toto */}
+        <div
+          className={cls(priceCl, { [textCenter]: !isHomePage })}
+          style={{
+            color: isHomePage ? '#333' : '#888'
+          }}
+        >
+          ${price}
+        </div>
 
-      {sizeChoose && (
-        <div className={btnClear} onClick={handleClearSize()}>
-          clear
-        </div>
-      )}
-      <div className={cls(title, { [textCenter]: isNotHomePage })}>{name}</div>
-      <div className={cls(priceCl, { [textCenter]: isNotHomePage })}>
-        Brand 01
+        {!isHomePage && (
+          <div className={cls(boxBtn, { [leftBtn]: !isShowGrid })}>
+            <Button content={'ADD TO CART'} />
+          </div>
+        )}
       </div>
-      <div className={cls(priceCl, { [textCenter]: isNotHomePage })}>
-        ${price}
-      </div>
-
-      {isNotHomePage && (
-        <div className={boxBtn}>
-          <Button content={'ADD TO CART'} />
-        </div>
-      )}
     </div>
   );
 }

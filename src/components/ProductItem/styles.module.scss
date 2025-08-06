@@ -13,8 +13,8 @@
   }
 
   &:hover .showImgWhenHover {
-    transition: opacity 500ms;
     opacity: 1;
+    transition: opacity 500ms;
   }
 
   .showImgWhenHover {
@@ -37,13 +37,15 @@
     opacity: 0;
     bottom: 20px;
     right: 0px;
-    background-color: variable.$white_color;
+    background-color: white;
   }
 
   .boxIcon {
     width: 40px;
     height: 40px;
     @include mixin.flex_box_custom(center, center, 0px);
+
+    cursor: pointer;
 
     img {
       width: 17px;
@@ -78,6 +80,30 @@
     padding: 4px 6px;
     border: 1px solid #e1e1e1;
     cursor: pointer;
+  }
+}
+
+.boxBtn {
+  width: 142px;
+  margin: 10px auto;
+}
+
+.priceCl {
+  font-size: 14px;
+  color: variable.$thr_color;
+  font-weight: 400;
+}
+
+.boxSize {
+  @include mixin.flex_box_custom(center, center, 10px);
+
+  .size {
+    @include mixin.flex_box_custom(center, center, 0px);
+
+    border: 1px solid #e1e1e1;
+    padding: 4px 6px;
+    font-size: 10px;
+    cursor: pointer;
 
     &:hover {
       border: 1px solid variable.$primary_color;
@@ -97,32 +123,30 @@
   margin-top: 10px;
 }
 
+.textCenter {
+  text-align: center;
+}
+
 .boxBtn {
   width: 142px;
   margin: 10px auto;
 }
 
-.priceCl {
-  font-size: 14px;
-  color: variable.$thr_color;
-  font-weight: 400;
-}
-
-.containerProductLine {
-  @include mixin.flex_box_custom(flex-start, center, 25px);
-
-  margin: 10px 0 30px 0;
-
-  .boxImg {
-    width: 430px;
-  }
+.containerItem {
+  @include mixin.flex_box_custom(flex-start, center, 20px);
+  margin-top: 10px;
 
   .content {
-    @include mixin.flex_box_custom(center, flex-start, 10px);
+    @include mixin.flex_box_custom(flex-start, flex-start, 10px);
+
     flex-direction: column;
   }
 
-  .boxBtn {
-    margin: 10px 0 0 0;
+  .leftBtn {
+    margin: 0px;
+  }
+
+  .largImg {
+    width: 430px;
   }
 }
