@@ -5,7 +5,7 @@ import ProductItem from '@components/ProductItem/ProductItem';
 import styles from '../styles.module.scss';
 import ProductItemLine from '@components/ProductItem/ProductItemLine';
 import Button from '@components/Button/Button';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 function ListProducts() {
   const { containerProduct, sectionListProduct, rotate } = styles;
@@ -44,7 +44,7 @@ function ListProducts() {
                 <Button
                   content={
                     isLoadMore ? (
-                      <AiOutlineLoading3Quarters className={rotate} />
+                      <LoadingTextCommon className={rotate} />
                     ) : (
                       'LOADING MORE PRODUCT'
                     )

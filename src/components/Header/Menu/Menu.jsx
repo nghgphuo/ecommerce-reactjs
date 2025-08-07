@@ -17,7 +17,7 @@ function Menu({ content, href }) {
       setType('login');
     }
 
-    if (content === 'Our Shop') {
+    if (content === 'Our shop') {
       navigate('/shop');
     }
   };

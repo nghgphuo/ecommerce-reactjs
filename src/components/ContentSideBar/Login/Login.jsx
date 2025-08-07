@@ -9,6 +9,7 @@ import { register, signIn } from '@/apis/authService';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import { StoreContext } from '@/contexts/storeProvider';
 import Cookies from 'js-cookie';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 function Login() {
   const { container, title, boxRememberMe, lostPw } = styles;
@@ -116,7 +117,15 @@ function Login() {
         )}
 
         <Button
-          content={isLoading ? 'IS LOADING' : isRegister ? 'REGISTER' : 'LOGIN'}
+          content={
+            isLoading ? (
+              <LoadingTextCommon />
+            ) : isRegister ? (
+              'REGISTER'
+            ) : (
+              'LOGIN'
+            )
+          }
           type='submit'
         />
       </form>

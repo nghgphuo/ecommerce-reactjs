@@ -7,7 +7,11 @@ import cls from 'classnames';
 import Button from '@components/Button/Button';
 import { useContext, useState, useEffect } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
-
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { ToastContext } from '@/contexts/ToastProvider';
+import { addProductToCart } from '@/apis/cartService';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
+import Cookies from 'js-cookie';
 function ProductItem({
   src,
   prevSrc,
@@ -19,6 +23,12 @@ function ProductItem({
   const [sizeChoose, setSizeChoose] = useState('');
   const ourShopStore = useContext(OurShopContext);
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
+
+  const userId = Cookies.get('userId');
+  const { setIsOpen, setType, handleGetListProductsCart } =
+    useContext(SideBarContext);
+  const { toast } = useContext(ToastContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     boxImg,
@@ -47,6 +57,42 @@ function ProductItem({
 
   const handleClearSize = () => {
     setSizeChoose('');
+  };
+
+  const handleAddToCart = () => {
+    if (!userId) {
+      setIsOpen(true);
+      setType('login');
+      toast.warning('Please login to add product to cart');
+
+      return;
+    }
+
+    if (!sizeChoose) {
+      toast.warning('Please choose size');
+      return;
+    }
+
+    const data = {
+      userId,
+      productId: details._id,
+      quantity: 1,
+      size: sizeChoose
+    };
+
+    setIsLoading(true);
+    addProductToCart(data)
+      .then((res) => {
+        setIsOpen(true);
+        setType('cart');
+        toast.success('Add Product to cart successfully!');
+        setIsLoading(false);
+        handleGetListProductsCart(userId, 'cart');
+      })
+      .catch((err) => {
+        toast.error('Add Product to cart failed!');
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -126,7 +172,10 @@ function ProductItem({
 
         {!isHomePage && (
           <div className={cls(boxBtn, { [leftBtn]: !isShowGrid })}>
-            <Button content={'ADD TO CART'} />
+            <Button
+              content={isLoading ? <LoadingTextCommon /> : 'ADD TO CART'}
+              onClick={handleAddToCart}
+            />
           </div>
         )}
       </div>
