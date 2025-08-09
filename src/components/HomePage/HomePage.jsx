@@ -1,13 +1,13 @@
-import Banner from '@components/Banner/Banner';
 import MyHeader from '@components/Header/Header';
 import AdvanceHeadling from '@components/AdvanceHeadling/AdvanceHeadling';
 import Info from '@components/Info/Info';
 import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduct';
-import { getProducts } from '@/apis/productsService';
-import { useEffect, useState } from 'react';
+import Banner from '@components/Banner/Banner';
+import MyFooter from '@components/Footer/Footer';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
-import MyFooter from '@components/Footer/Footer';
+import { getProducts } from '@/apis/productsService';
+import { useEffect, useState } from 'react';
 
 function HomePage() {
   const [listProducts, setListProducts] = useState([]);

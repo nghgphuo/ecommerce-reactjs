@@ -1,6 +1,5 @@
 @use '@styles/variable.module.scss' as variable;
 @use '@styles/mixin.module.scss' as mixin;
-
 .container {
   padding: 20px;
 
@@ -37,6 +36,10 @@
       border: 1px solid #e1e1e1;
       font-size: 12px;
       cursor: pointer;
+
+      &:hover {
+        border: 1px solid variable.$primary_color;
+      }
     }
 
     .isActive {

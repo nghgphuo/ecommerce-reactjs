@@ -1,0 +1,114 @@
+@use '@styles/variable.module.scss' as variable;
+@use '@styles/mixin.module.scss' as mixin;
+
+.container {
+  padding-top: 83px;
+
+  .navigateSection {
+    @include mixin.flex_box_custom(space-between, center, 0px);
+
+    font-size: 14px;
+    font-weight: 300;
+    padding: 10px 0;
+  }
+
+  .contentSection {
+    @include mixin.flex_box_custom(unset, flex-start, 0px);
+
+    .imageBox {
+      max-width: 610px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      img {
+        width: calc(100 / 2 -10px);
+        height: 350px;
+        object-fit: cover;
+        border-radius: 3px;
+        cursor: zoom-in;
+      }
+    }
+
+    .infoBox {
+      flex-grow: 1;
+
+      h1 {
+        font-size: 24px;
+        margin-top: 0px;
+        font-weight: 400;
+        color: variable.$four_color;
+      }
+
+      .price {
+        font-size: 20px;
+        color: variable.$secondary_color;
+      }
+
+      .description {
+        color: variable.$thr_color;
+        font-weight: 300;
+      }
+
+      .titleSize {
+        margin-bottom: 5px;
+        font-weight: 400;
+        color: variable.$thr_color;
+      }
+
+      .boxSize {
+        @include mixin.flex_box_custom(flex-start, center, 10px);
+
+        .size {
+          @include mixin.flex_box_custom(center, center, 0px);
+
+          border: 1px solid #e1e1e1;
+          padding: 6px 10px;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      }
+
+      .functionInfo {
+        @include mixin.flex_box_custom(space-between, center, 20px);
+
+        margin-top: 20px;
+        .boxBtn {
+          flex-grow: 1;
+        }
+        incrementAmount {
+          @include flex_box_custom(center, center, 0px);
+
+          div {
+            border: 1px solid #e1e1e1;
+            padding: 8px 5px;
+            color: $seconddary_color;
+            cursor: pointer;
+          }
+
+          div:nth-child(2) {
+            padding: 8px 10px;
+            color: $thr_color;
+            cursor: unset;
+          }
+        }
+      }
+
+      .orSection {
+        @include flex_box_custom(center, center, 0px);
+        margin: 20px 0px;
+
+        div {
+          width: 100%;
+          height: 1px;
+          background-color: #e1e1e1;
+        }
+
+        span {
+          padding: 0px 10px;
+        }
+      }
+    }
+  }
+}

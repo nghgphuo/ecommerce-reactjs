@@ -1,16 +1,17 @@
-import styles from './styles.module.scss';
-import { addProductToCart } from '@/apis/cartService';
-import cls from 'classnames';
 import Button from '@components/Button/Button';
-import { useContext, useState, useEffect } from 'react';
-import { OurShopContext } from '@contexts/OurShopProvider';
-import { SideBarContext } from '@/contexts/SideBarProvider';
-import { ToastContext } from '@/contexts/ToastProvider';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
-import Cookies from 'js-cookie';
 import { CiHeart } from 'react-icons/ci';
 import { LiaEyeSolid, LiaShoppingBagSolid } from 'react-icons/lia';
 import { TfiReload } from 'react-icons/tfi';
+import { OurShopContext } from '@contexts/OurShopProvider';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { ToastContext } from '@/contexts/ToastProvider';
+import { addProductToCart } from '@/apis/cartService';
+import { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.scss';
+import cls from 'classnames';
+import Cookies from 'js-cookie';
 
 function ProductItem({
   src,
@@ -29,6 +30,7 @@ function ProductItem({
     useContext(SideBarContext);
   const { toast } = useContext(ToastContext);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     boxImg,
@@ -101,6 +103,12 @@ function ProductItem({
     setDetailProduct(details);
   };
 
+  const handleNavigateToDetail = () => {
+    const path = `/products/${details._id}`;
+    console.log(path);
+    navigate(path);
+  };
+
   useEffect(() => {
     if (isHomePage) {
       setIsShowGrid(true);
@@ -110,7 +118,11 @@ function ProductItem({
   }, [isHomePage, ourShopStore?.isShowGrid]);
 
   return (
-    <div className={isShowGrid ? '' : containerItem}>
+    <div
+      className={isShowGrid ? '' : containerItem}
+      style={{ cursor: 'pointer' }}
+      onClick={handleNavigateToDetail}
+    >
       <div className={cls(boxImg, { [largImg]: !isShowGrid })}>
         <img src={src} alt='' />
         <img src={prevSrc} alt='' className={showImgWhenHover} />
