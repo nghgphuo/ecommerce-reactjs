@@ -1,0 +1,93 @@
+@use '@styles/variable.module.scss' as variable;
+@use '@styles/mixin.module.scss' as mixin;
+
+.container {
+  padding: 20px;
+
+  .title {
+    font-size: 24px;
+    color: variable.$four_color;
+    margin-top: 20px;
+  }
+
+  .price {
+    font-size: 20px;
+    color: variable.$secondary_color;
+    margin: 10px 0;
+    font-weight: 400;
+  }
+
+  .des {
+    color: variable.$thr_color;
+    font-weight: 400;
+  }
+
+  .label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: variable.$thr_color;
+    margin-bottom: 5px;
+  }
+
+  .boxSize {
+    @include mixin.flex_box_custom(flex-start, center, 10px);
+
+    .size {
+      padding: 9px 12px;
+      border: 1px solid #e1e1e1;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .isActive {
+      border: 1px solid variable.$primary_color;
+    }
+  }
+
+  .boxAddToCart {
+    @include mixin.flex_box_custom(flex-start, center, 10px);
+
+    margin-top: 20px;
+
+    select {
+      width: 65px;
+      height: 36px;
+    }
+
+    button {
+      width: 190px;
+    }
+  }
+
+  .boxOr {
+    @include mixin.flex_box_custom(center, center, 10px);
+
+    font-size: 12px;
+    color: variable.$thr_color;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .line {
+      width: 100px;
+      height: 1px;
+      background-color: #e1e1e1;
+      flex-grow: 1;
+    }
+  }
+
+  .boxAddOther {
+    @include mixin.flex_box_custom(flex-start, center, 10px);
+
+    margin-top: 12px;
+    color: variable.$four_color;
+    cursor: pointer;
+  }
+
+  .boxFooter {
+    margin-top: 12px;
+
+    span {
+      color: variable.$secondary_color;
+    }
+  }
+}
