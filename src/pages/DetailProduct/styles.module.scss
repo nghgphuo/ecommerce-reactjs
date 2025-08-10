@@ -13,7 +13,7 @@
   }
 
   .contentSection {
-    @include mixin.flex_box_custom(unset, flex-start, 0px);
+    @include mixin.flex_box_custom(unset, flex-start, 20px);
 
     .imageBox {
       max-width: 610px;
@@ -23,7 +23,7 @@
       gap: 10px;
 
       img {
-        width: calc(100 / 2 -10px);
+        width: calc(100% / 2 - 10px);
         height: 350px;
         object-fit: cover;
         border-radius: 3px;
@@ -77,26 +77,27 @@
         .boxBtn {
           flex-grow: 1;
         }
-        incrementAmount {
-          @include flex_box_custom(center, center, 0px);
+
+        .incrementAmount {
+          @include mixin.flex_box_custom(center, center, 0px);
 
           div {
             border: 1px solid #e1e1e1;
             padding: 8px 5px;
-            color: $seconddary_color;
+            color: variable.$secondary_color;
             cursor: pointer;
           }
 
           div:nth-child(2) {
             padding: 8px 10px;
-            color: $thr_color;
+            color: variable.$thr_color;
             cursor: unset;
           }
         }
       }
 
       .orSection {
-        @include flex_box_custom(center, center, 0px);
+        @include mixin.flex_box_custom(center, center, 0px);
         margin: 20px 0px;
 
         div {
@@ -107,6 +108,45 @@
 
         span {
           padding: 0px 10px;
+          font-size: 12px;
+          color: variable.$four_color;
+        }
+      }
+
+      .addFunc {
+        @include mixin.flex_box_custom(unset, center, 10px);
+        margin: 30px 0px;
+
+        div {
+          @include mixin.flex_box_custom(center, center, 0px);
+
+          cursor: pointer;
+          border: 1px solid #e1e1e1;
+          border-radius: 50%;
+          padding: 10px;
+
+          svg {
+            font-size: 30px;
+          }
+        }
+
+        div:last-child {
+          padding: 13px;
+          svg {
+            font-size: 25px;
+          }
+        }
+      }
+
+      .info {
+        @include mixin.flex_box_custom(unset, flex-start, 10px);
+
+        margin: 20px 0px;
+        flex-direction: column;
+        color: variable.$four_color;
+
+        span {
+          color: variable.$secondary_color;
         }
       }
     }
