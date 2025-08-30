@@ -104,7 +104,7 @@ function ProductItem({
   };
 
   const handleNavigateToDetail = () => {
-    const path = `/products/${details._id}`;
+    const path = `/product/${details._id}`;
     console.log(path);
     navigate(path);
   };
