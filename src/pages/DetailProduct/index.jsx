@@ -7,6 +7,8 @@ import { useState } from 'react';
 import styles from './styles.module.scss';
 import { TfiReload } from 'react-icons/tfi';
 import { CiHeart } from 'react-icons/ci';
+import InformationProduct from '@/pages/DetailProduct/components/Infomation';
+import ReviewProduct from '@/pages/DetailProduct/components/Review';
 
 function DetailProduct() {
   const {
@@ -34,22 +36,12 @@ function DetailProduct() {
     {
       id: 1,
       titleMenu: 'ADDITIONAL INFORMATION',
-      content: <div>CONTENT ADDITIONAL</div>
+      content: <InformationProduct />
     },
     {
       id: 2,
       titleMenu: 'REVIEW (0)',
-      content: <div>CONTENT REVIEW</div>
-    },
-    {
-      id: 3,
-      titleMenu: 'Linh tinh',
-      content: <div>CONTENT REVIEW</div>
-    },
-    {
-      id: 4,
-      titleMenu: 'Vu vo',
-      content: <div>CONTENT REVIEW</div>
+      content: <ReviewProduct />
     }
   ];
 
@@ -63,9 +55,9 @@ function DetailProduct() {
       <div className={container}>
         <MainLayout>
           <div className={navigateSection}>
-            <div>Home &gt Menu</div>
+            <div>Home &gt; Menu</div>
             <div className={''} style={{ cursor: 'pointer' }}>
-              &lt Return to previous page
+              &lt; Return to previous page
             </div>
           </div>
 
@@ -155,15 +147,17 @@ function DetailProduct() {
                 </div>
               </div>
               {dataAccordionMenu.map((item, index) => {
-                <AccordionMenu
-                  titleMenu={item.titleMenu}
-                  contentJsx={item.content}
-                  key={index}
-                  onClick={() => {
-                    handleSetMenuSelected(item.id);
-                  }}
-                  isSelected={menuSelected === item.id}
-                />;
+                return (
+                  <AccordionMenu
+                    titleMenu={item.titleMenu}
+                    contentJsx={item.content}
+                    key={index}
+                    onClick={() => {
+                      handleSetMenuSelected(item.id);
+                    }}
+                    isSelected={menuSelected === item.id}
+                  />
+                );
               })}
             </div>
           </div>
