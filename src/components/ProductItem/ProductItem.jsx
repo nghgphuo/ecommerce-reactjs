@@ -19,7 +19,8 @@ function ProductItem({
   name,
   price,
   details,
-  isHomePage = true
+  isHomePage = true,
+  slideItem = false
 }) {
   const [sizeChoose, setSizeChoose] = useState('');
   const ourShopStore = useContext(OurShopContext);
@@ -117,6 +118,10 @@ function ProductItem({
     }
   }, [isHomePage, ourShopStore?.isShowGrid]);
 
+  useEffect(() => {
+    if (slideItem) setIsShowGrid(true);
+  }, [slideItem]);
+
   return (
     <div
       className={isShowGrid ? '' : containerItem}
@@ -160,7 +165,12 @@ function ProductItem({
           </div>
         </div>
       </div>
-      <div className={isShowGrid ? '' : content}>
+      <div
+        className={isShowGrid ? '' : content}
+        style={{
+          marginTop: slideItem && '10px'
+        }}
+      >
         {!isHomePage && (
           <div className={boxSize}>
             {sizes.map((item, index) => {
