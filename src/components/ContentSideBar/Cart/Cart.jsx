@@ -4,7 +4,7 @@ import { PiShoppingCartLight } from 'react-icons/pi';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { useContext } from 'react';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 import cls from 'classnames';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ function Cart() {
   } = styles;
   const navigate = useNavigate();
 
-  const { listProductCart, isLoading, setIsOpen } = useContext(SideBarContext);
+  const { listProductCart, isLoading, setIsOpen } = useContext(SidebarContext);
 
   const handleNavigateToShop = () => {
     navigate('/shop');

@@ -11,7 +11,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { BsHeart } from 'react-icons/bs';
 import { PiShoppingCart } from 'react-icons/pi';
 import { useContext } from 'react';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 
 function MyHeader() {
   const {
@@ -34,7 +34,7 @@ function MyHeader() {
     listProductCart,
     userId,
     handleGetListProductsCart
-  } = useContext(SideBarContext);
+  } = useContext(SidebarContext);
   const handleOpenSideBar = (type) => {
     setIsOpen(true);
     setType(type);

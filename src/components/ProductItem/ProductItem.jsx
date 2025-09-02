@@ -4,7 +4,7 @@ import { CiHeart } from 'react-icons/ci';
 import { LiaEyeSolid, LiaShoppingBagSolid } from 'react-icons/lia';
 import { TfiReload } from 'react-icons/tfi';
 import { OurShopContext } from '@contexts/OurShopProvider';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import { useContext, useState, useEffect } from 'react';
@@ -29,7 +29,7 @@ function ProductItem({
 
   const userId = Cookies.get('userId');
   const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
-    useContext(SideBarContext);
+    useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();

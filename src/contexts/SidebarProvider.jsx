@@ -4,7 +4,7 @@ import { getCart } from '@/apis/cartService';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 
-export const SideBarContext = createContext();
+export const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +48,6 @@ export const SidebarProvider = ({ children }) => {
   }, []);
 
   return (
-    <SideBarContext.Provider value={value}>{children}</SideBarContext.Provider>
+    <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
   );
 };

@@ -19,7 +19,10 @@ function SliderCommon({ data, isProductItem = false, showItem = 1 }) {
   return (
     <Slider {...settings}>
       {data.map((item, index) => {
+        console.log('1 - ', item.image);
+        console.log('2 - ', item.images);
         const src = !item.image ? item.images[0] : item.image;
+        console.log('3 - ', src);
         return (
           <>
             {isProductItem ? (

@@ -1,5 +1,5 @@
-import { SidebarProvider } from '@/contexts/SideBarProvider';
-import SideBar from '@components/Sidebar/Sidebar';
+import { SidebarProvider } from '@/contexts/SidebarProvider';
+import Sidebar from '@components/Sidebar/Sidebar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import routers from '@/routers/routers';
 import { Suspense } from 'react';
@@ -12,7 +12,7 @@ function App() {
       <ToastProvider>
         <SidebarProvider>
           <BrowserRouter>
-            <SideBar />
+            <Sidebar />
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 {routers.map((item, index) => {

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styles from './styles.module.scss';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import classNames from 'classnames';
 import { TfiClose } from 'react-icons/tfi';
 import Login from '@components/ContentSideBar/Login/Login';
@@ -9,9 +9,9 @@ import WishList from '@components/ContentSideBar/WishList/WishList';
 import Cart from '@components/ContentSideBar/Cart/Cart';
 import DetailProduct from '@components/ContentSideBar/DetailProduct/DetailProduct';
 
-function SideBar() {
-  const { container, overlay, sideBar, slideSideBar, boxIcon } = styles;
-  const { isOpen, setIsOpen, type } = useContext(SideBarContext);
+function Sidebar() {
+  const { container, overlay, Sidebar, slideSideBar, boxIcon } = styles;
+  const { isOpen, setIsOpen, type } = useContext(SidebarContext);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -43,7 +43,7 @@ function SideBar() {
         onClick={handleToggle}
       />
       <div
-        className={classNames(sideBar, {
+        className={classNames(Sidebar, {
           [slideSideBar]: isOpen
         })}
       >
@@ -58,4 +58,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default Sidebar;

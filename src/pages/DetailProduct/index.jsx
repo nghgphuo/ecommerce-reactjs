@@ -18,7 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import { handleAddProductToCartCommon } from '@/utils/helper';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import Cookies from 'js-cookie';
 
@@ -59,7 +59,7 @@ function DetailProduct() {
   const param = useParams();
   const navigate = useNavigate();
   const { setIsOpen, setType, handleGetListProductsCart } =
-    useContext(SideBarContext);
+    useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
   const userId = Cookies.get('userId');
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);

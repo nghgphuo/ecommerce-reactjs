@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { useState, useEffect, useContext } from 'react';
 import styles from './styles.module.scss';
 import { register, signIn } from '@/apis/authService';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import { StoreContext } from '@/contexts/storeProvider';
 import Cookies from 'js-cookie';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
@@ -17,7 +17,7 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
-  const { setIsOpen, handleGetListProductsCart } = useContext(SideBarContext);
+  const { setIsOpen, handleGetListProductsCart } = useContext(SidebarContext);
   const { setUserId } = useContext(StoreContext);
 
   const formik = useFormik({

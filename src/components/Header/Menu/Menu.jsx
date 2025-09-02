@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
 import styles from '../styles.module.scss';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import { StoreContext } from '@/contexts/storeProvider';
 import { useNavigate } from 'react-router-dom';
 
 function Menu({ content, href }) {
   const { menu, subMenu } = styles;
-  const { setIsOpen, setType } = useContext(SideBarContext);
+  const { setIsOpen, setType } = useContext(SidebarContext);
   const { userInfo, handleLogOut } = useContext(StoreContext);
   const [isShowSubMenu, setIsShowSubMenu] = useState(false);
   const navigate = useNavigate();

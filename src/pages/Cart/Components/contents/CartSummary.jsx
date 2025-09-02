@@ -4,7 +4,7 @@ import Button from '@components/Button/Button';
 import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import cls from 'classnames';
 import { useContext } from 'react';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import LoadingCart from '@/pages/Cart/components/Loading';
 
 const CartSummary = () => {
@@ -24,7 +24,7 @@ const CartSummary = () => {
     textSecure
   } = styles;
 
-  const { listProductCart, isLoading } = useContext(SideBarContext);
+  const { listProductCart, isLoading } = useContext(SidebarContext);
 
   const total = listProductCart.reduce((acc, item) => {
     return acc + item.total;

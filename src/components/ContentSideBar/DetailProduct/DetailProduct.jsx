@@ -1,4 +1,4 @@
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import styles from './styles.module.scss';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import SelectBox from '@/pages/OurShop/components/SelectBox';
@@ -37,7 +37,7 @@ function DetailProduct() {
     handleGetListProductsCart,
     setIsLoading,
     setIsOpen
-  } = useContext(SideBarContext);
+  } = useContext(SidebarContext);
   const [chooseSize, setChooseSize] = useState('');
   const [quantity, setQuantity] = useState('1');
 

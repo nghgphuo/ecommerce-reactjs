@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { SideBarContext } from '@/contexts/SideBarProvider';
+import { SidebarContext } from '@/contexts/SidebarProvider';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 import { deleteItem } from '@/apis/cartService';
 
@@ -26,7 +26,7 @@ function ItemProduct({
     overlayLoading
   } = styles;
   const [isDelete, setIsDelete] = useState(false);
-  const { handleGetListProductsCart } = useContext(SideBarContext);
+  const { handleGetListProductsCart } = useContext(SidebarContext);
 
   const handleRemoveItem = () => {
     setIsDelete(true);
