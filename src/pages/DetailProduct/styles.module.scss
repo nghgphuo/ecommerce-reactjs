@@ -311,3 +311,25 @@
   background-color: #333 !important;
   color: #fff;
 }
+
+.emptyData {
+  height: 977px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 24px;
+  }
+}
+
+.loading {
+  height: 977px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+}
