@@ -1,24 +1,26 @@
 import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
-import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
-import { CiHeart } from 'react-icons/ci';
-import { TfiReload } from 'react-icons/tfi';
-import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import AccordionMenu from '@components/AccordionMenu';
-import { useState } from 'react';
+import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import InformationProduct from '@/pages/DetailProduct/components/Infomation';
 import ReviewProduct from '@/pages/DetailProduct/components/Review';
 import MyFooter from '@components/Footer/Footer';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
-import ReactImageMagnifier from 'simple-image-magnifier/react';
-import cls from 'classnames';
-import { useEffect } from 'react';
-import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
-import { useParams } from 'react-router-dom';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
-import { useNavigate } from 'react-router-dom';
+import ReactImageMagnifier from 'simple-image-magnifier/react';
+import styles from './styles.module.scss';
+import cls from 'classnames';
+import { CiHeart } from 'react-icons/ci';
+import { TfiReload } from 'react-icons/tfi';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
+import { handleAddProductToCartCommon } from '@/utils/helper';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { ToastContext } from '@/contexts/ToastProvider';
+import Cookies from 'js-cookie';
 
 const INCREMENT = 'increment';
 const DECREMENT = 'decrement';
@@ -56,6 +58,11 @@ function DetailProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
+  const { setIsOpen, setType, handleGetListProductsCart } =
+    useContext(SideBarContext);
+  const { toast } = useContext(ToastContext);
+  const userId = Cookies.get('userId');
+  const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
   const dataAccordionMenu = [
     {
@@ -89,6 +96,20 @@ function DetailProduct() {
     setSizeSelected(size);
   };
 
+  const handleAdd = () => {
+    handleAddProductToCartCommon(
+      userId,
+      setIsOpen,
+      setType,
+      toast,
+      sizeSelected,
+      param.id,
+      quantity,
+      setIsLoadingBtn,
+      handleGetListProductsCart
+    );
+  };
+
   const handleClearSizeSeleted = () => {
     setSizeSelected('');
   };
@@ -109,7 +130,7 @@ function DetailProduct() {
       setData(data);
       setIsLoading(false);
     } catch (error) {
-      toast.error('có lỗi khi tải dữ liệu');
+      toast.error('Có lỗi khi tải dữ liệu');
       setData();
       setIsLoading(false);
     }
@@ -123,7 +144,7 @@ function DetailProduct() {
       setIsLoading(false);
     } catch (error) {
       setRelatedData([]);
-      toast.error('có lỗi khi tải dữ liệu');
+      toast.error('Có lỗi khi tải dữ liệu');
       setIsLoading(false);
     }
   };
@@ -153,112 +174,137 @@ function DetailProduct() {
               <LoadingTextCommon />
             </div>
           ) : (
-            <div className={contentSection}>
-              <div className={imageBox}>
-                {data?.images.map((src) => handleRenderZoomImage(src))}
-              </div>
-              <div className={infoBox}>
-                <h1>{data?.name}</h1>
-                <p className={price}>${data?.price}</p>
-                <p className={description}>{data?.description}</p>
-
-                <p className={titleSize}>Size {sizeSelected}</p>
-                <div className={boxSize}>
-                  {data?.size.map((itemSize, index) => {
-                    return (
-                      <div
-                        className={cls(size, {
-                          [active]: sizeSelected === itemSize.name
-                        })}
-                        key={index}
-                        onClick={() => handleSelectedSize(itemSize.name)}
-                      >
-                        {itemSize.name}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {sizeSelected && (
-                  <p className={clear} onClick={handleClearSizeSeleted}>
-                    clear
-                  </p>
-                )}
-
-                <div className={functionInfo}>
-                  <div className={incrementAmount}>
-                    <div onClick={() => handleSetQuantity(DECREMENT)}>-</div>
-                    <div>{quantity}</div>
-                    <div onClick={() => handleSetQuantity(INCREMENT)}>+</div>
-                  </div>
-
-                  <div className={boxBtn}>
+            <>
+              {!data ? (
+                <div className={emptyData}>
+                  <p>No Result</p>
+                  <div>
                     <Button
-                      content={'Add to cart'}
-                      customClassname={!sizeSelected && activeDisabledBtn}
+                      content={'Back to Our Shop'}
+                      onClick={() => navigate('/shop')}
                     />
                   </div>
                 </div>
-
-                <div className={orSection}>
-                  <div></div>
-                  <span>OR</span>
-                  <div></div>
-                </div>
-
-                <div>
-                  <Button
-                    content={'Buy Now'}
-                    customClassname={!sizeSelected && activeDisabledBtn}
-                  />
-                </div>
-
-                <div className={addFunc}>
-                  <div>
-                    <CiHeart />
+              ) : (
+                <div className={contentSection}>
+                  <div className={imageBox}>
+                    {data?.images.map((src) => handleRenderZoomImage(src))}
                   </div>
+                  <div className={infoBox}>
+                    <h1>{data?.name}</h1>
+                    <p className={price}>${data?.price}</p>
+                    <p className={description}>{data?.description}</p>
 
-                  <div>
-                    <TfiReload />
+                    <p className={titleSize}>Size {sizeSelected}</p>
+                    <div className={boxSize}>
+                      {data?.size.map((itemSize, index) => {
+                        return (
+                          <div
+                            className={cls(size, {
+                              [active]: sizeSelected === itemSize.name
+                            })}
+                            key={index}
+                            onClick={() => handleSelectedSize(itemSize.name)}
+                          >
+                            {itemSize.name}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {sizeSelected && (
+                      <p className={clear} onClick={handleClearSizeSeleted}>
+                        clear
+                      </p>
+                    )}
+
+                    <div className={functionInfo}>
+                      <div className={incrementAmount}>
+                        <div onClick={() => handleSetQuantity(DECREMENT)}>
+                          -
+                        </div>
+                        <div>{quantity}</div>
+                        <div onClick={() => handleSetQuantity(INCREMENT)}>
+                          +
+                        </div>
+                      </div>
+
+                      <div className={boxBtn}>
+                        <Button
+                          content={
+                            isLoadingBtn ? <LoadingTextCommon /> : 'Add to Cart'
+                          }
+                          customClassname={!sizeSelected && activeDisabledBtn}
+                          onClick={handleAdd}
+                        />
+                      </div>
+                    </div>
+
+                    <div className={orSection}>
+                      <div></div>
+                      <span>OR</span>
+                      <div></div>
+                    </div>
+
+                    <div>
+                      <Button
+                        content={'Buy Now'}
+                        customClassname={!sizeSelected && activeDisabledBtn}
+                      />
+                    </div>
+
+                    <div className={addFunc}>
+                      <div>
+                        <CiHeart />
+                      </div>
+
+                      <div>
+                        <TfiReload />
+                      </div>
+                    </div>
+
+                    <div>
+                      <PaymentMethods />
+                    </div>
+
+                    <div className={info}>
+                      <div>
+                        Brand: <span>Brand 03</span>
+                      </div>
+
+                      <div>
+                        SKU: <span>87654</span>
+                      </div>
+
+                      <div>
+                        Category: <span>Men</span>
+                      </div>
+                    </div>
+
+                    {dataAccordionMenu.map((item, index) => (
+                      <AccordionMenu
+                        titleMenu={item.titleMenu}
+                        contentJsx={item.content}
+                        key={index}
+                        onClick={() => handleSetMenuSelected(item.id)}
+                        isSelected={menuSelected === item.id}
+                      />
+                    ))}
                   </div>
                 </div>
-
-                <div>
-                  <PaymentMethods />
-                </div>
-
-                <div className={info}>
-                  <div>
-                    Brand: <span>Brand 03</span>
-                  </div>
-
-                  <div>
-                    SKU: <span>87654</span>
-                  </div>
-
-                  <div>
-                    Category: <span>Men</span>
-                  </div>
-                </div>
-
-                {dataAccordionMenu.map((item, index) => (
-                  <AccordionMenu
-                    titleMenu={item.titleMenu}
-                    contentJsx={item.content}
-                    key={index}
-                    onClick={() => handleSetMenuSelected(item.id)}
-                    isSelected={menuSelected === item.id}
-                  />
-                ))}
-              </div>
-            </div>
+              )}
+            </>
           )}
 
-          <div>
-            <h2>Related products</h2>
+          {relatedData.length ? (
+            <div>
+              <h2>Related products</h2>
 
-            <SliderCommon data={relatedData} isProductItem showItem={4} />
-          </div>
+              <SliderCommon data={relatedData} isProductItem showItem={4} />
+            </div>
+          ) : (
+            <></>
+          )}
         </MainLayout>
       </div>
 
