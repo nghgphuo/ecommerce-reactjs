@@ -35,9 +35,15 @@ function MyHeader() {
     userId,
     handleGetListProductsCart
   } = useContext(SidebarContext);
+
   const handleOpenSideBar = (type) => {
     setIsOpen(true);
     setType(type);
+  };
+
+  const handleOpenCartSideBar = () => {
+    handleGetListProductsCart(userId, 'cart');
+    handleOpenSideBar('cart');
   };
 
   useEffect(() => {
@@ -98,7 +104,7 @@ function MyHeader() {
                 style={{
                   fontSize: '25px'
                 }}
-                onClick={() => handleOpenSideBar('cart')}
+                onClick={() => handleOpenCartSideBar()}
               />
 
               <div className={quantity}>{listProductCart.length}</div>

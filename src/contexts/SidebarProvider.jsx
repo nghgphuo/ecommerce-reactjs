@@ -3,6 +3,7 @@ import { createContext } from 'react';
 import { getCart } from '@/apis/cartService';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { useParams, useLocation } from 'react-router-dom';
 
 export const SidebarContext = createContext();
 
@@ -40,12 +41,9 @@ export const SidebarProvider = ({ children }) => {
     setIsLoading,
     userId,
     detailProduct,
-    setDetailProduct
+    setDetailProduct,
+    setListProductCart
   };
-
-  useEffect(() => {
-    handleGetListProductsCart(userId, 'cart');
-  }, []);
 
   return (
     <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>

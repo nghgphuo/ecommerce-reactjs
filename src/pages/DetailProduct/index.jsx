@@ -15,12 +15,13 @@ import { CiHeart } from 'react-icons/ci';
 import { TfiReload } from 'react-icons/tfi';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
-import { handleAddProductToCartCommon } from '@/utils/helper';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
+import { toast } from 'react-toastify';
+import { handleAddProductToCartCommon } from '@/utils/helper';
+import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import Cookies from 'js-cookie';
+import { addProductToCart } from 'src/apis/cartService';
 
 const INCREMENT = 'increment';
 const DECREMENT = 'decrement';
@@ -63,6 +64,7 @@ function DetailProduct() {
   const { toast } = useContext(ToastContext);
   const userId = Cookies.get('userId');
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+  const [isLoadingBtnBuyNow, setIsLoadingBtnBuyNow] = useState(false);
 
   const dataAccordionMenu = [
     {
@@ -149,6 +151,27 @@ function DetailProduct() {
     }
   };
 
+  const handleBuyNow = () => {
+    const data = {
+      userId,
+      productId: param.id,
+      quantity,
+      size: sizeSelected
+    };
+
+    setIsLoadingBtnBuyNow(true);
+    addProductToCart(data)
+      .then(() => {
+        toast.success('Add product to cart successfully!');
+        setIsLoadingBtnBuyNow(false);
+        navigate('/cart');
+      })
+      .catch((err) => {
+        toast.error('Add product to cart failed!');
+        setIsLoadingBtnBuyNow(false);
+      });
+  };
+
   useEffect(() => {
     if (param.id) {
       fetchDataDetail(param.id);
@@ -180,8 +203,10 @@ function DetailProduct() {
                   <p>No Result</p>
                   <div>
                     <Button
-                      content={'Back to Our Shop'}
-                      onClick={() => navigate('/shop')}
+                      content={
+                        isLoadingBtnBuyNow ? <LoadingTextCommon /> : 'Buy now'
+                      }
+                      onClick={handleBuyNow}
                     />
                   </div>
                 </div>
