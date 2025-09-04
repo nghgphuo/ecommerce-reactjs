@@ -11,7 +11,8 @@ import 'swiper/css/navigation';
 const styles = {
   container: {
     position: 'relative',
-    marginTop: '80px'
+    marginTop: '80px',
+    overflow: 'visible'
   }
 };
 
@@ -21,11 +22,28 @@ const customStyles = `
   .logos-slider .swiper-button-prev {
     opacity: 0;
     transition: opacity 0.3s ease;
+    color: black;
+    width: 44px;
+    height: 44px;
+    margin-top: -22px
   }
   
   .logos-slider:hover .swiper-button-next,
   .logos-slider:hover .swiper-button-prev {
     opacity: 1;
+  }
+
+  .logos-slider .swiper-button-next {
+    right: -20px; /* Đặt nút next xa hơn về bên phải */
+  }
+
+  .logos-slider .swiper-button-prev {
+    left: -20px; /* Đặt nút prev xa hơn về bên trái */
+  }
+
+  .logos-slider .swiper-button-next::after,
+  .logos-slider .swiper-button-prev::after {
+    font-size: 24px;
   }
 `;
 
