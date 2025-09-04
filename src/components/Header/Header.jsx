@@ -29,7 +29,7 @@ function MyHeader() {
 
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
-  const userInfo = useContext(StoreContext);
+  const { userInfo } = useContext(StoreContext);
   const {
     setIsOpen,
     setType,
