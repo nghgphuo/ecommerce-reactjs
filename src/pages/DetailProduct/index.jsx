@@ -21,7 +21,7 @@ import { toast } from 'react-toastify';
 import { handleAddProductToCartCommon } from '@/utils/helper';
 import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import Cookies from 'js-cookie';
-import { addProductToCart } from 'src/apis/cartService';
+import { addProductToCart } from '@/apis/cartService';
 
 const INCREMENT = 'increment';
 const DECREMENT = 'decrement';
@@ -161,7 +161,7 @@ function DetailProduct() {
 
     setIsLoadingBtnBuyNow(true);
     addProductToCart(data)
-      .then(() => {
+      .then((res) => {
         toast.success('Add product to cart successfully!');
         setIsLoadingBtnBuyNow(false);
         navigate('/cart');
@@ -188,7 +188,7 @@ function DetailProduct() {
           <div className={navigateSection}>
             <div>Home {'>'} Men</div>
             <div className='' style={{ cursor: 'pointer' }}>
-              {'<'} Return to previous page{' '}
+              {'<'} Return to previous page
             </div>
           </div>
 
@@ -203,10 +203,8 @@ function DetailProduct() {
                   <p>No Result</p>
                   <div>
                     <Button
-                      content={
-                        isLoadingBtnBuyNow ? <LoadingTextCommon /> : 'Buy now'
-                      }
-                      onClick={handleBuyNow}
+                      content={'Back to Our Shop'}
+                      onClick={() => navigate('/shop')}
                     />
                   </div>
                 </div>
@@ -273,8 +271,11 @@ function DetailProduct() {
 
                     <div>
                       <Button
-                        content={'Buy Now'}
+                        content={
+                          isLoadingBtnBuyNow ? <LoadingTextCommon /> : 'Buy now'
+                        }
                         customClassname={!sizeSelected && activeDisabledBtn}
+                        onClick={handleBuyNow}
                       />
                     </div>
 

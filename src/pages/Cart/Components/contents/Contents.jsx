@@ -7,7 +7,7 @@ import { SidebarContext } from '@contexts/SidebarProvider';
 import { addProductToCart, deleteItem, deleteCart } from '@/apis/cartService';
 import { PiShoppingCartLight } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
-import { getCart } from 'src/apis/cartService';
+import { getCart } from '@/apis/cartService';
 
 function Contents() {
   const {
@@ -71,15 +71,17 @@ function Contents() {
   };
 
   useEffect(() => {
-    getCart(userId)
-      .then((res) => {
-        setListProductCart(res.data.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setListProductCart([]);
-        setIsLoading(false);
-      });
+    if (userId) {
+      getCart(userId)
+        .then((res) => {
+          setListProductCart(res.data.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setListProductCart([]);
+          setIsLoading(false);
+        });
+    }
   }, []);
 
   return (

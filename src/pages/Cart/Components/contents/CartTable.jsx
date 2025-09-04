@@ -6,13 +6,13 @@ import LoadingCart from '@/pages/Cart/Components/Loading';
 function CartTable({ listProductCart, getData, isLoading, getDataDelete }) {
   const { cartTable } = styles;
 
-  const handleDelete = (id) => {
-    console.log('Delete item with id:', id);
-  };
+  // const handleDelete = (id) => {
+  //   console.log('Delete item with id:', id);
+  // };
 
-  const handleQuantityChange = () => {
-    console.log('Update item:', id, 'to quantity:', newQuantity);
-  };
+  // const handleQuantityChange = () => {
+  //   console.log('Update item:', id, 'to quantity:', newQuantity);
+  // };
 
   const showOptions = [
     { label: '1', value: '1' },

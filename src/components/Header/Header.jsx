@@ -12,6 +12,7 @@ import { BsHeart } from 'react-icons/bs';
 import { PiShoppingCart } from 'react-icons/pi';
 import { useContext } from 'react';
 import { SidebarContext } from '@/contexts/SidebarProvider';
+import { StoreContext } from '@/contexts/storeProvider';
 
 function MyHeader() {
   const {
@@ -28,6 +29,7 @@ function MyHeader() {
 
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
+  const userInfo = useContext(StoreContext);
   const {
     setIsOpen,
     setType,
@@ -45,6 +47,12 @@ function MyHeader() {
     handleGetListProductsCart(userId, 'cart');
     handleOpenSideBar('cart');
   };
+
+  const totalItemCart = listProductCart.length
+    ? listProductCart.reduce((acc, item) => {
+        return (acc += item.quantity);
+      }, 0)
+    : 0;
 
   useEffect(() => {
     setFixedPosition(scrollPosition > 80);
@@ -107,7 +115,9 @@ function MyHeader() {
                 onClick={() => handleOpenCartSideBar()}
               />
 
-              <div className={quantity}>{listProductCart.length}</div>
+              <div className={quantity}>
+                {totalItemCart || userInfo?.amountCart || 0}
+              </div>
             </div>
           </div>
         </div>
