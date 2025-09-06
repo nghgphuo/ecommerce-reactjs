@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { StepperContext } from '@/contexts/StepperProvider';
 import Contents from '@/pages/Cart/components/contents/Contents';
+import Checkout from '@/pages/Cart/components/Checkout/Checkout';
 
 function ContentStep() {
   const handleRenderContent = () => {
@@ -10,7 +11,7 @@ function ContentStep() {
       case 1:
         return <Contents />;
       case 2:
-        return <>Steps 2</>;
+        return <Checkout />;
       case 3:
         return <>Steps 3</>;
     }
