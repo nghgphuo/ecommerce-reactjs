@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import cls from 'classnames';
 import styles from './styles.module.scss';
 import axios from 'axios';
+import RightBody from '@/pages/Cart/components/Checkout/RightBody';
+import { useRef } from 'react';
 
 const CN_BASE = 'https://countriesnow.space/api/v0.1';
 
@@ -28,6 +30,12 @@ function Checkout() {
     getValues,
     formState: { errors }
   } = useForm();
+
+  const formRef = useRef();
+
+  const handleExternalSubmit = () => {
+    formRef.current.requestSubmit();
+  };
 
   useEffect(() => {
     axios.get(`${CN_BASE}/countries/iso`).then((res) =>
@@ -94,7 +102,10 @@ function Checkout() {
 
         <p className={title}>BILLING DETAILS</p>
 
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit((data) => console.log(data))}
+        >
           <div className={cls(row, row2Column)}>
             <InputCustom
               label={'First Name'}
@@ -209,12 +220,10 @@ function Checkout() {
               })}
             />
           </div>
-
-          <button type='submit'>Submit</button>
         </form>
       </div>
 
-      <div className={rightBody}></div>
+      <RightBody handleExternalSubmit={handleExternalSubmit} />
     </div>
   );
 }

@@ -6,6 +6,8 @@ import cls from 'classnames';
 import { useContext } from 'react';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import LoadingCart from '@/pages/Cart/components/Loading';
+import { StepperContext } from '@/contexts/StepperProvider';
+import { handleTotalPrice } from '@/utils/helper';
 
 const CartSummary = () => {
   const {
@@ -16,19 +18,21 @@ const CartSummary = () => {
     subTotal,
     totals,
     space,
-    containerMethods,
-    titleMethods,
-    containerRight,
-    boxImgMethods,
-    imgMethods,
-    textSecure
+
+    containerRight
   } = styles;
 
   const { listProductCart, isLoading } = useContext(SidebarContext);
 
+  const { setCurrentStep } = useContext(StepperContext);
+
   const total = listProductCart.reduce((acc, item) => {
     return acc + item.total;
   }, 0);
+
+  const handleProcessCheckout = () => {
+    setCurrentStep(2);
+  };
 
   return (
     <div className={containerRight}>
@@ -45,7 +49,10 @@ const CartSummary = () => {
           <div>${total.toFixed(2)}</div>
         </div>
 
-        <Button content={'PROCEED TO CHECKOUT'} />
+        <Button
+          content={'PROCEED TO CHECKOUT'}
+          onClick={handleProcessCheckout}
+        />
         <div className={space} />
         <Button content={'CONTINUE SHOPPING'} isPrimary={false} />
 

@@ -174,7 +174,7 @@ function DetailProduct() {
         Estimated delivery: <span>3 - 5 days</span>
       </div>
       <div className={boxFooter}>
-        Share:{' '}
+        Share:
         <span>
           <FaXTwitter />
           <FaFacebookF />
