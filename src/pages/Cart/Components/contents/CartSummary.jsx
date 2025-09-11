@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from '../../styles.module.scss';
 import Button from '@components/Button/Button';
-import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import cls from 'classnames';
 import { useContext } from 'react';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import LoadingCart from '@/pages/Cart/components/Loading';
+import PaymentMethods from '@components/PaymentMethods/PaymentMethods';
 import { StepperContext } from '@/contexts/StepperProvider';
 import { handleTotalPrice } from '@/utils/helper';
 
@@ -18,17 +18,10 @@ const CartSummary = () => {
     subTotal,
     totals,
     space,
-
     containerRight
   } = styles;
-
   const { listProductCart, isLoading } = useContext(SidebarContext);
-
   const { setCurrentStep } = useContext(StepperContext);
-
-  const total = listProductCart.reduce((acc, item) => {
-    return acc + item.total;
-  }, 0);
 
   const handleProcessCheckout = () => {
     setCurrentStep(2);
@@ -41,12 +34,14 @@ const CartSummary = () => {
 
         <div className={cls(boxTotal, subTotal)}>
           <div>Subtotal</div>
-          <div className={price}>${total.toFixed(2)}</div>
+          <div className={price}>
+            ${handleTotalPrice(listProductCart).toFixed(2)}
+          </div>
         </div>
 
         <div className={cls(boxTotal, totals)}>
           <div>TOTAL</div>
-          <div>${total.toFixed(2)}</div>
+          <div>${handleTotalPrice(listProductCart).toFixed(2)}</div>
         </div>
 
         <Button
@@ -57,8 +52,9 @@ const CartSummary = () => {
         <Button content={'CONTINUE SHOPPING'} isPrimary={false} />
 
         {isLoading && <LoadingCart />}
-        <PaymentMethods />
       </div>
+
+      <PaymentMethods />
     </div>
   );
 };

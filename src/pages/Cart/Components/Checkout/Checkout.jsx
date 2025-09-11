@@ -1,27 +1,23 @@
 import InputCustom from '@components/InputCommon2/Input';
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import cls from 'classnames';
-import styles from './styles.module.scss';
-import axios from 'axios';
 import RightBody from '@/pages/Cart/components/Checkout/RightBody';
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { createOrder } from '@/apis/orderService';
+import styles from './styles.module.scss';
+import cls from 'classnames';
+import axios from 'axios';
 
 const CN_BASE = 'https://countriesnow.space/api/v0.1';
 
 function Checkout() {
-  const dataOptions = [
-    { value: '1', label: 'Option 1' },
-    { value: '2', label: 'Option 2' },
-    { value: '3', label: 'Option 3' }
-  ];
-
   const { container, title, coupon, leftBody, rightBody, row, row2Column } =
     styles;
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -35,6 +31,17 @@ function Checkout() {
 
   const handleExternalSubmit = () => {
     formRef.current.requestSubmit();
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await createOrder(data);
+      navigate(
+        `/order?id=${res.data.data._id}&totalAmount=${res.data.data.totalAmount}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -102,10 +109,7 @@ function Checkout() {
 
         <p className={title}>BILLING DETAILS</p>
 
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit((data) => console.log(data))}
-        >
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <div className={cls(row, row2Column)}>
             <InputCustom
               label={'First Name'}
@@ -115,6 +119,7 @@ function Checkout() {
                 required: true,
                 maxLength: 25
               })}
+              isError={errors.firstName}
             />
             <InputCustom
               label={'Last Name'}
@@ -124,6 +129,7 @@ function Checkout() {
                 required: true,
                 maxLength: 25
               })}
+              isError={errors.lastName}
             />
           </div>
 
@@ -143,6 +149,7 @@ function Checkout() {
               register={register('country', {
                 required: true
               })}
+              isError={errors.country}
             />
           </div>
 
@@ -154,6 +161,7 @@ function Checkout() {
               register={register('street', {
                 required: true
               })}
+              isError={errors.street}
             />
           </div>
 
@@ -174,6 +182,7 @@ function Checkout() {
               register={register('cities', {
                 required: true
               })}
+              isError={errors.cities}
             />
           </div>
 
@@ -185,6 +194,7 @@ function Checkout() {
               register={register('state', {
                 required: true
               })}
+              isError={errors.state}
             />
           </div>
 
@@ -196,6 +206,7 @@ function Checkout() {
               register={register('phone', {
                 required: true
               })}
+              isError={errors.phone}
             />
           </div>
 
@@ -207,6 +218,7 @@ function Checkout() {
               register={register('zipCode', {
                 required: true
               })}
+              isError={errors.zipCode}
             />
           </div>
 
@@ -218,6 +230,7 @@ function Checkout() {
               register={register('email', {
                 required: true
               })}
+              isError={errors.email}
             />
           </div>
         </form>
