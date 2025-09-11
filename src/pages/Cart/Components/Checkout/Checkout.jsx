@@ -1,9 +1,10 @@
 import InputCustom from '@components/InputCommon2/Input';
 import RightBody from '@/pages/Cart/components/Checkout/RightBody';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '@/apis/orderService';
+import { StepperContext } from '@/contexts/StepperProvider';
 import styles from './styles.module.scss';
 import cls from 'classnames';
 import axios from 'axios';
@@ -18,6 +19,7 @@ function Checkout() {
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
   const navigate = useNavigate();
+  const { setCurrentStep } = useContext(StepperContext);
 
   const {
     register,
@@ -36,8 +38,9 @@ function Checkout() {
   const onSubmit = async (data) => {
     try {
       const res = await createOrder(data);
+      setCurrentStep(3);
       navigate(
-        `/order?id=${res.data.data._id}&totalAmount=${res.data.data.totalAmount}`
+        `/cart?id=${res.data.data._id}&totalAmount=${res.data.data.totalAmount}`
       );
     } catch (error) {
       console.log(error);
